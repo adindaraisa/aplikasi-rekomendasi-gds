@@ -23,13 +23,14 @@ def rekomendasi_paper_berpengaruh(request):
         result = session.run("""
             CALL gds.pageRank.stream('pageGraph')
             YIELD nodeId, score
-            RETURN gds.util.asNode(nodeId).title AS title, score
+            RETURN gds.util.asNode(nodeId).title AS title, gds.util.asNode(nodeId).paperId AS paperId, score
             ORDER BY score DESC, title ASC
             LIMIT 10                    
         """)
 
         papers = [
             {
+                "id": record["paperId"],
                 "title": record["title"],
                 "score": record["score"]
             }
