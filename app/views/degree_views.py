@@ -25,7 +25,7 @@ def rekomendasi_paper_populer(request):
             YIELD nodeId, score
             WITH gds.util.asNode(nodeId) AS node, score
             WHERE node:Paper
-            RETURN node.id AS paperId, node.title AS paperTitle, score AS readCount
+            RETURN node.paperId AS paperId, node.title AS paperTitle, score AS readCount
             ORDER BY readCount DESC
             LIMIT 10
         """)

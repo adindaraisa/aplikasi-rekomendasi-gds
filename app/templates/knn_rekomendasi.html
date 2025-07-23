@@ -2,65 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Rekomendasi Artikel Populer</title>
+    <title>Detail Paper dan Rekomendasi</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 2rem;
         }
-        h1 {
+
+        h1, h2 {
             margin-bottom: 1rem;
         }
+
+        .paper-detail {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
         }
+
         th, td {
             padding: 0.75rem;
             border: 1px solid #ccc;
         }
+
         th {
             background-color: #f0f0f0;
-        }
-        a.button {
-            padding: 0.4rem 0.8rem;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-        a.button:hover {
-            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <h1>Daftar Paper Populer</h1>
+
+    <h1>Detail Paper</h1>
+    <div class="paper-detail">
+        <h2>{{ paper.title }}</h2>
+        <p><strong>Abstrak:</strong></p>
+        <p>{{ paper.abstract }}</p>
+    </div>
+
+    <h2>Rekomendasi Paper Serupa</h2>
     <table>
         <thead>
             <tr>
                 <th>No</th>
                 <th>Judul</th>
-                <th>Total Dibaca</th>
-                <th style="text-align: center;">Detail</th>
+                <th>Similarity</th>
             </tr>
         </thead>
         <tbody>
-            {% for paper in papers %}
+            {% for similar in similar_papers %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td>{{ paper.title }}</td>
-                <td>{{ paper.readCount }}</td>
-                <td style="text-align: center;">
-                    <a href="{% url 'paper-detail' paper.id %}" class="button">Lihat</a>
-                </td>
+                <td>{{ similar.title }}</td>
+                <td>{{ similar.similarity|floatformat:4 }}</td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="4">Tidak ada data.</td>
+                <td colspan="3">Tidak ada paper serupa.</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+
 </body>
 </html>
